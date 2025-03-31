@@ -2,7 +2,7 @@
 
 /* Base styles */
 body {
-  background-color: #2a3439; /* Darker background */
+  background-color: #1a202c; /* Darker navy-black background */
   font-family: 'Times New Roman', Times, serif; /* Font changed to Times New Roman */
   color: #fff;
   margin: 0;
@@ -173,10 +173,4 @@ a:hover {
   .footer {
     font-size: 0.9rem;
   }
-}
-/* Add styles for error message */
-.error-text {
-  color: red;
-  font-size: 1.1rem;
-  margin-top: 10px;
 }
