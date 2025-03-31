@@ -66,24 +66,28 @@ body {
   outline: none;
 }
 
+/* Button styling */
 .button {
   padding: 12px 24px;
-  background-color: #4a5568; /* Button with dark background */
+  background-color: #4a5568; /* Dark button background */
   color: #cbd5e1; /* Lighter text */
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border: none; /* Removed border to make buttons cleaner */
 }
 
 .button:hover {
-  background-color: #3b82f6; /* Blue hover */
-  transform: scale(1.05); /* Slight scale effect */
+  background-color: #3b82f6; /* Hover effect */
+  transform: scale(1.05); /* Slight scaling effect on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow on hover for depth */
 }
 
 .button-active {
-  background-color: #2563eb; /* Active button */
-  color: white;
+  background-color: #2563eb; /* Active button background */
+  color: white; /* White text for active button */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for active button */
 }
 
 /* Color display */
