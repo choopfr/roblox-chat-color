@@ -2,8 +2,8 @@
 
 /* Base styles */
 body {
-  background-color: #333333; /* Darker, less blue-grey background */
-  font-family: 'Times New Roman', Times, serif; /* Changed font to Times New Roman */
+  background-color: #2a3439; /* Darker background */
+  font-family: 'Times New Roman', Times, serif; /* Font changed to Times New Roman */
   color: #fff;
   margin: 0;
   padding: 0;
@@ -11,6 +11,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  text-transform: lowercase; /* Make all text lowercase */
 }
 
 a {
@@ -43,6 +44,7 @@ a:hover {
 .find-color-text {
   margin-bottom: 20px;
   font-size: 1.2rem;
+  color: #cbd5e1; /* Lighter color for contrast */
 }
 
 /* Input and Button */
@@ -72,22 +74,21 @@ a:hover {
 
 .button {
   padding: 12px 24px;
-  background-color: #2d3748;
-  color: #cbd5e1;
+  background-color: #4a5568; /* Button with dark background */
+  color: #cbd5e1; /* Lighter text */
   border-radius: 8px;
   font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .button:hover {
-  background-color: #3b82f6;
-  color: white;
-  transform: scale(1.05); /* Adds animation effect */
+  background-color: #3b82f6; /* Blue hover */
+  transform: scale(1.05); /* Slight scale effect */
 }
 
 .button-active {
-  background-color: #2563eb;
+  background-color: #2563eb; /* Active button */
   color: white;
 }
 
