@@ -1,9 +1,13 @@
 /* globals.css */
 
+/* Apply font to html tag */
+html {
+  font-family: 'Times New Roman', Times, serif; /* Font set to Times New Roman */
+}
+
 /* Base styles */
 body {
-  background-color: #0a0b10; /* Darker navy-black background */
-  font-family: sans-serif; /* Default sans-serif font */
+  background-color: #0a0b10; /* Darker background */
   color: #fff;
   margin: 0;
   padding: 0;
@@ -14,26 +18,12 @@ body {
   text-transform: lowercase; /* Make all text lowercase */
 }
 
-a {
-  text-decoration: none;
-  color: #3b82f6; /* Blue link color */
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #2563eb; /* Lighter blue when hovered */
-}
-
 /* Main container */
 .container {
   text-align: center;
   width: 100%;
   max-width: 600px;
   padding: 20px;
-  display: flex;
-  flex-direction: column; /* Center the content vertically */
-  justify-content: center;
-  align-items: center;
 }
 
 /* Title */
@@ -125,4 +115,56 @@ a:hover {
 .panel-body {
   display: none;
   padding: 12px;
-  background-color:
+  background-color: #4a5568;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.panel-body.active {
+  display: block;
+}
+
+/* Footer */
+.footer {
+  font-size: 1rem;
+  color: #cbd5e1;
+  margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-text {
+    font-size: 2rem;
+  }
+
+  .input-field {
+    width: 200px;
+  }
+
+  .button {
+    padding: 10px 20px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .input-container {
+    flex-direction: column;
+  }
+
+  .input-field {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .footer {
+    font-size: 0.9rem;
+  }
+}
