@@ -1,103 +1,92 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useRef, useState } from 'react'
+import GetNameColor from '@/scripts/generator' // Make sure you have this file inside `scripts`
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [username, setUsername] = useState<string>('R0bl0x10501050');
+  const [version, setVersion] = useState<number>(3);
+  const colorRef = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    let color = GetNameColor(username, version);
+    if (color) {
+      colorRef.current!.style.color = 'rgb(255, 255, 255, 1)';
+      colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
+    } else {
+      colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0, 0)';
+      colorRef.current!.innerText = 'Impossible to display color';
+      colorRef.current!.style.color = 'rgb(255, 0, 0, 1)';
+    }
+  }, [username, version]);
+
+  return (
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <div className="font-bold text-5xl text-white">Roblox Name Color</div>
+      <div className="mt-5 text-lg text-slate-300">
+        Find a user&apos;s chat color. Inspired by&nbsp;
+        <a
+          href="https://devforum.roblox.com/t/your-name-color-in-chat-%E2%80%94-history-and-how-it-works/2702247"
+          className="text-blue-500 transition duration-200 hover:text-blue-400"
+        >
+          this DevForum post
+        </a>.
+      </div>
+      <div className="mt-5 flex flex-row justify-center space-x-6">
+        <input
+          onInput={() => setUsername((document.getElementById('username') as HTMLInputElement).value)}
+          autoComplete="off"
+          type="text"
+          name="username"
+          id="username"
+          className="px-5 py-3 bg-slate-900 border-slate-700 border-2 text-white rounded-lg placeholder:text-slate-300 focus:border-blue-600 focus:outline-none transition duration-200"
+          value={username}
+        />
+        <div className="flex flex-row justify-center space-x-3">
+          <button
+            onClick={() => setVersion(1)}
+            className={`${
+              version === 1 ? 'bg-blue-500 text-slate-200 hover:text-white' : 'bg-slate-800 text-blue-500 hover:text-blue-400'
+            } px-5 py-3 text-center rounded-lg font-bold transition duration-200`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            v1
+          </button>
+          <button
+            onClick={() => setVersion(2)}
+            className={`${
+              version === 2 ? 'bg-blue-500 text-slate-200 hover:text-white' : 'bg-slate-800 text-blue-500 hover:text-blue-400'
+            } px-5 py-3 text-center rounded-lg font-bold transition duration-200`}
           >
-            Read our docs
-          </a>
+            v2
+          </button>
+          <button
+            onClick={() => setVersion(3)}
+            className={`${
+              version === 3 ? 'bg-blue-500 text-slate-200 hover:text-white' : 'bg-slate-800 text-blue-500 hover:text-blue-400'
+            } px-5 py-3 text-center rounded-lg font-bold transition duration-200`}
+          >
+            v3
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+      </div>
+      <div ref={colorRef} className="mt-5 px-10 py-3 text-center rounded-lg transition duration-200">.</div>
+      <div className="my-5 text-slate-300">
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="https://github.com/RyloRiz"
+          className="text-blue-500 transition duration-200 hover:text-blue-400"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+          @RyloRiz
         </a>
+        &nbsp;on GitHub |&nbsp;
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="https://devforum.roblox.com/u/r0bl0x10501050"
+          className="text-blue-500 transition duration-200 hover:text-blue-400"
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
+          @R0bl0x10501050
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        &nbsp;on Roblox &amp; DevForum
+      </div>
     </div>
   );
 }
