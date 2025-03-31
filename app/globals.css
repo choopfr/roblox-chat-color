@@ -114,6 +114,7 @@ a:hover {
 .panel-container {
   margin-top: 20px;
   transition: all 0.3s ease;
+  overflow: hidden; /* Prevents panel body from overflowing */
 }
 
 .panel-header {
@@ -131,19 +132,20 @@ a:hover {
 }
 
 .panel-body {
-  display: none;
   padding: 12px;
   background-color: #4a5568;
   border-radius: 8px;
   margin-top: 10px;
   opacity: 0;
+  transform: translateY(-20px); /* Initially, position it above */
   height: 0;
-  transition: opacity 0.5s ease, height 0.5s ease;
+  overflow: hidden;
+  transition: opacity 0.5s ease, transform 0.5s ease, height 0.5s ease;
 }
 
 .panel-body.active {
-  display: block;
   opacity: 1;
+  transform: translateY(0); /* Slide into place */
   height: auto;
 }
 
