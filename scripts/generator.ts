@@ -1,42 +1,91 @@
-function hashStringToColor(name: string, version: number): { r: number; g: number; b: number } {
-    let hash = 0;
-  
-    // Improved hashing algorithm
-    for (let i = 0; i < name.length; i++) {
-        hash = (hash * 31 + name.charCodeAt(i)) % 16777215;
-    }
-
-    let r = (hash >> 16) & 255;
-    let g = (hash >> 8) & 255;
-    let b = hash & 255;
-
-    // Adjusting version-specific modifications (if needed)
-    if (version === 1) {
-        r = (r * 1.2) % 256;
-        g = (g * 0.8) % 256;
-        b = (b * 1.1) % 256;
-    } else if (version === 2) {
-        r = (r * 0.9) % 256;
-        g = (g * 1.1) % 256;
-        b = (b * 0.9) % 256;
-    } else if (version === 3) {
-        r = (r * 1.1) % 256;
-        g = (g * 0.9) % 256;
-        b = (b * 1.2) % 256;
-    }
-
-    // Ensure colors fall into expected categories
-    if (r > g && r > b) {
-        return { r: 255, g: 0, b: 0 }; // Red
-    } else if (b > r && b > g) {
-        return { r: 0, g: 0, b: 255 }; // Blue
-    } else if (g > r && g > b) {
-        return { r: 0, g: 255, b: 0 }; // Green
-    } else {
-        return { r: 128, g: 0, b: 128 }; // Default Purple
-    }
+class Color {
+	public r: number;
+	public g: number;
+	public b: number;
+	constructor(r: number, g: number, b: number) {
+		this.r = r;
+		this.g = g;
+		this.b = b;
+	}
 }
 
-export default function GetNameColor(name: string, version: number) {
-    return hashStringToColor(name, version);
-}
+let CHAT_COLORS_BY_VERSION_FN = () => {
+	let fakePersimmon = new Color(253, 41, 67);
+	let fakeCyan = new Color(1, 162, 255);
+	let fakeDarkGreen = new Color(2, 184, 87);
+	let brightViolet = new Color(107, 50, 124);
+
+	let t = [
+		[
+			new Color(196, 40, 28), // Bright red
+			new Color(13, 105, 172), // Bright blue
+			new Color(39, 70, 45), // Earth green
+			brightViolet
+		],
+		[
+			fakePersimmon,
+			fakeCyan,
+			fakeDarkGreen,
+			brightViolet
+		],
+		[
+			fakePersimmon,
+			fakeCyan,
+			fakeDarkGreen,
+			new Color(180, 128, 255) // Alder
+		]
+	];
+
+	let unchangedColors = [
+		new Color(218, 133, 65), // Bright orange
+		new Color(245, 205, 48), // Bright yellow
+		new Color(232, 186, 200), // Light reddish violet
+		new Color(215, 197, 154), // Brick yellow
+	];
+
+	function move(src: any[], a: number, b: number, t: number, dist: any[]) {
+		for (let i = 0; i <= b - a; i++) {
+			let srcElement = src[i + a];
+			let distIdx = t + i;
+			dist[distIdx] = srcElement;
+		}
+		return dist;
+	}
+
+	for (let i = 0; i < t.length; i++) {
+		let colors = t[i];
+		t[i] = move(unchangedColors, 0, unchangedColors.length - 1, colors.length, colors);
+	}
+
+	Object.freeze(t);
+	return t;
+};
+
+let CHAT_COLORS_BY_VERSION = CHAT_COLORS_BY_VERSION_FN();
+
+let ComputeNameValue = (username: string) => {
+	let value = 0;
+	for (let index = 0; index <= username.length - 1; index++) {
+		let cVal = username.charAt(index);
+		let cValue = cVal.charCodeAt(0);
+		let reverseIndex = username.length - index;
+		if (username.length % 2 === 1) {
+			reverseIndex -= 1;
+		}
+		if (reverseIndex % 4 >= 2) {
+			cValue = -cValue;
+		}
+		value += cValue;
+	}
+	return value;
+};
+
+let GetNameColor = (username: string, version_?: number) => {
+	let chatColors = CHAT_COLORS_BY_VERSION[typeof version_ === 'number' ? version_ - 1 : CHAT_COLORS_BY_VERSION.length - 1];
+	let cmv = ComputeNameValue(username);
+	let len = chatColors.length;
+	let value = cmv - Math.floor(cmv / len) * len; // Fix modulus issue for negative numbers
+	return chatColors[value];
+};
+
+export default GetNameColor;
