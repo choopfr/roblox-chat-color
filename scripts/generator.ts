@@ -84,7 +84,9 @@ let GetNameColor = (username: string, version_?: number) => {
 	let chatColors = CHAT_COLORS_BY_VERSION[typeof version_ === 'number' ? version_ - 1 : CHAT_COLORS_BY_VERSION.length - 1];
 	let cmv = ComputeNameValue(username);
 	let len = chatColors.length;
-	let value = cmv - Math.floor(cmv / len) * len; // Fix modulus issue for negative numbers
+	let value = ((cmv % len) + len) % len; // Ensure non-negative index
+
+	console.log(`Username: ${username}, ComputeNameValue: ${cmv}, Color Index: ${value}`);
 	return chatColors[value];
 };
 
