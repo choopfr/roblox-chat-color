@@ -57,6 +57,7 @@ export default function Home() {
             id="username"
             className="input-field"
             value={username}
+            placeholder="choopfr" // Placeholder added
           />
           <div className="flex space-x-3">
             <button
