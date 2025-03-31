@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import GetNameColor from '@/scripts/generator'; // Ensure this file exists and is working correctly
 
 export default function Home() {
-  const [username, setUsername] = useState<string>('choopfr');
+  const [username, setUsername] = useState<string>('boist');
   const [version, setVersion] = useState<number>(3);
+  const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false); // State to toggle panel visibility
   const colorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,10 +22,15 @@ export default function Home() {
     }
   }, [username, version]);
 
+  // Toggle the panel
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
   return (
-    <div className="centered-container">
+    <div className="container">
       <div>
-        <div className="font-bold text-5xl text-white">Roblox Name Color</div>
+        <div className="header-text">Roblox Name Color</div>
         <div className="mt-5 text-lg text-slate-300">
           Find a user&apos;s chat color. Inspired by&nbsp;
           <a
@@ -34,7 +40,7 @@ export default function Home() {
             this DevForum post
           </a>.
         </div>
-        <div className="mt-5 flex justify-center items-center space-x-6">
+        <div className="input-container">
           <input
             onInput={() => setUsername((document.getElementById('username') as HTMLInputElement).value)}
             autoComplete="off"
@@ -70,6 +76,14 @@ export default function Home() {
           className="color-display mt-5 px-5 py-3 text-center rounded-lg transition duration-200"
         >
           .
+        </div>
+        <div className="panel-container mt-5">
+          <div onClick={togglePanel} className="panel-header">
+            What is this?
+          </div>
+          <div className={`panel-body ${isPanelOpen ? 'active' : ''}`}>
+            Roblox changes your chat color based on your username! Insert your username and this site will tell you what color your username will be in Roblox chat.
+          </div>
         </div>
         <div className="footer mt-5 text-slate-300">
           <a
