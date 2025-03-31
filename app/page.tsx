@@ -17,22 +17,22 @@ export default function Home() {
 
   useEffect(() => {
     if (username.trim().length < 3 || username.trim().length > 20) {
-      colorRef.current!.style.backgroundColor = "rgb(0, 0, 0)";
-      colorRef.current!.style.color = "white";
-      colorRef.current!.innerText = "Username must be between 3 and 20 characters!";
-      return;
-    }
-
-    let color = GetNameColor(username, version);
-    if (color) {
-      const textColor = getTextColorForBackground(color.r, color.g, color.b); // Get appropriate text color
-      colorRef.current!.style.color = textColor; // Change text color based on brightness of background
-      colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
-      colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
+      // If username length is invalid, show an error
+      colorRef.current!.style.backgroundColor = 'rgb(255, 0, 0)';
+      colorRef.current!.style.color = 'white';
+      colorRef.current!.innerText = 'Username must be between 3 and 20 characters!';
     } else {
-      colorRef.current!.style.backgroundColor = "rgb(0, 0, 0)";
-      colorRef.current!.innerText = "0, 0, 0";
-      colorRef.current!.style.color = "white";
+      let color = GetNameColor(username, version);
+      if (color) {
+        const textColor = getTextColorForBackground(color.r, color.g, color.b);
+        colorRef.current!.style.color = textColor;
+        colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+        colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
+      } else {
+        colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0)';
+        colorRef.current!.innerText = '0, 0, 0';
+        colorRef.current!.style.color = 'white';
+      }
     }
   }, [username, version]);
 
