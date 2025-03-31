@@ -63,7 +63,6 @@ let CHAT_COLORS_BY_VERSION_FN = () => {
 
 let CHAT_COLORS_BY_VERSION = CHAT_COLORS_BY_VERSION_FN();
 
-// Compute Name Value function to get a "hash" value for the username
 let ComputeNameValue = (username: string) => {
   let value = 0;
   for (let index = 0; index <= username.length - 1; index++) {
@@ -81,7 +80,6 @@ let ComputeNameValue = (username: string) => {
   return value;
 };
 
-// Function to get the name color, ensuring username is valid
 let GetNameColor = (username: string, version_?: number) => {
   // Validate username length (must be between 3 and 20 characters)
   if (username.trim().length < 3 || username.trim().length > 20) {
