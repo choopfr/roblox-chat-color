@@ -31,14 +31,8 @@ export default function Home() {
     <div className="container">
       <div>
         <div className="header-text">Roblox Name Color</div>
-        <div className="mt-5 text-lg text-slate-300">
-          Find a user&apos;s chat color. Inspired by&nbsp;
-          <a
-            href="https://devforum.roblox.com/t/your-name-color-in-chat-%E2%80%94-history-and-how-it-works/2702247"
-            className="text-blue-500 hover:text-blue-400"
-          >
-            this DevForum post
-          </a>.
+        <div className="find-color-text">
+          Find a user&apos;s chat color.
         </div>
         <div className="input-container">
           <input
@@ -86,20 +80,7 @@ export default function Home() {
           </div>
         </div>
         <div className="footer mt-5 text-slate-300">
-          <a
-            href="https://github.com/RyloRiz"
-            className="text-blue-500 transition duration-200 hover:text-blue-400"
-          >
-            @RyloRiz
-          </a>
-          &nbsp;on GitHub |&nbsp;
-          <a
-            href="https://devforum.roblox.com/u/r0bl0x10501050"
-            className="text-blue-500 transition duration-200 hover:text-blue-400"
-          >
-            @R0bl0x10501050
-          </a>
-          &nbsp;on Roblox &amp; DevForum
+          made by choop
         </div>
       </div>
     </div>
