@@ -1,11 +1,18 @@
 /* globals.css */
+
+/* Base styles */
 body {
-  background-color: #1a202c; /* Dark background for contrast */
+  background-color: #2d3748; /* Dark grey background */
   font-family: 'Inter', sans-serif;
   color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-/* Tailwind adds these styles by default, but you can override them */
 a {
   text-decoration: none;
   color: #3b82f6; /* Blue link color */
@@ -16,70 +23,127 @@ a:hover {
   color: #2563eb; /* Lighter blue when hovered */
 }
 
-/* Centering styles for the main div */
-.centered-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+/* Main container */
+.container {
   text-align: center;
+  width: 100%;
+  max-width: 600px;
   padding: 20px;
 }
 
+/* Title */
 .header-text {
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: #fff;
   margin-bottom: 20px;
 }
 
-/* Button styles */
-.button {
-  padding: 12px 24px;
-  background-color: #1e293b; /* Dark blue-gray */
-  color: #cbd5e1; /* Light gray text */
-  border-radius: 8px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.button:hover {
-  background-color: #3b82f6; /* Blue hover */
-  color: white;
-}
-
-.button-active {
-  background-color: #2563eb; /* Active button state */
-  color: white;
+/* Input and Button */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
 }
 
 .input-field {
   padding: 12px;
-  background-color: #2d3748; /* Darker gray input */
-  color: #cbd5e1; /* Light gray text */
+  background-color: #4a5568;
+  color: #cbd5e1;
   border-radius: 8px;
-  border: 2px solid #4b5563; /* Slight border to distinguish input */
+  border: 2px solid #2d3748;
   font-size: 1rem;
   width: 250px;
-  margin-right: 12px;
   transition: border-color 0.3s ease;
 }
 
 .input-field:focus {
-  border-color: #3b82f6; /* Highlight border on focus */
+  border-color: #3b82f6;
   outline: none;
 }
 
+.button {
+  padding: 12px 24px;
+  background-color: #2d3748;
+  color: #cbd5e1;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.button-active {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* Color display */
 .color-display {
   padding: 16px;
-  background-color: #4b5563;
+  background-color: #4a5568;
   border-radius: 8px;
   margin-top: 20px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.color-display p {
+  font-size: 1.2rem;
+}
+
+/* Collapsible panel */
+.panel-container {
+  margin-top: 20px;
+}
+
+.panel-header {
+  background-color: #2d3748;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.panel-body {
+  display: none;
+  padding: 12px;
+  background-color: #4a5568;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.panel-body.active {
+  display: block;
+}
+
+/* Footer */
 .footer {
   font-size: 1rem;
   color: #cbd5e1;
   margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-text {
+    font-size: 2rem;
+  }
+
+  .input-field {
+    width: 200px;
+  }
+
+  .button {
+    padding: 10px 20px;
+  }
+
+  .container {
+    padding: 15px;
+  }
 }
