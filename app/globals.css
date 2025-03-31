@@ -12,6 +12,7 @@ body {
   align-items: center;
   min-height: 100vh;
   text-transform: lowercase; /* Make all text lowercase */
+  transition: all 0.3s ease;
 }
 
 a {
@@ -30,6 +31,7 @@ a:hover {
   width: 100%;
   max-width: 600px;
   padding: 20px;
+  transition: all 0.3s ease;
 }
 
 /* Title */
@@ -38,6 +40,7 @@ a:hover {
   font-weight: 700;
   color: #fff;
   margin-bottom: 20px;
+  transition: font-size 0.3s ease, margin-bottom 0.3s ease;
 }
 
 /* Find user's chat color text */
@@ -45,6 +48,7 @@ a:hover {
   margin-bottom: 20px;
   font-size: 1.2rem;
   color: #cbd5e1; /* Lighter color for contrast */
+  transition: color 0.3s ease;
 }
 
 /* Input and Button */
@@ -64,12 +68,13 @@ a:hover {
   border: 2px solid #2d3748;
   font-size: 1rem;
   width: 250px;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, transform 0.2s ease;
 }
 
 .input-field:focus {
   border-color: #3b82f6;
   outline: none;
+  transform: scale(1.05);
 }
 
 .button {
@@ -108,6 +113,7 @@ a:hover {
 /* Collapsible panel */
 .panel-container {
   margin-top: 20px;
+  transition: all 0.3s ease;
 }
 
 .panel-header {
@@ -116,6 +122,12 @@ a:hover {
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.panel-header:hover {
+  background-color: #3b82f6;
+  transform: scale(1.05);
 }
 
 .panel-body {
@@ -124,10 +136,15 @@ a:hover {
   background-color: #4a5568;
   border-radius: 8px;
   margin-top: 10px;
+  opacity: 0;
+  height: 0;
+  transition: opacity 0.5s ease, height 0.5s ease;
 }
 
 .panel-body.active {
   display: block;
+  opacity: 1;
+  height: auto;
 }
 
 /* Footer */
@@ -135,6 +152,7 @@ a:hover {
   font-size: 1rem;
   color: #cbd5e1;
   margin-top: 30px;
+  transition: font-size 0.3s ease;
 }
 
 /* Responsive Design */
