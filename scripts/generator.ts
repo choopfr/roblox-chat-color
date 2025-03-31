@@ -1,50 +1,42 @@
-class Color {
-    public r: number;
-    public g: number;
-    public b: number;
-    constructor(r: number, g: number, b: number) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
+function hashStringToColor(name: string, version: number): { r: number; g: number; b: number } {
+    let hash = 0;
+  
+    // Improved hashing algorithm
+    for (let i = 0; i < name.length; i++) {
+        hash = (hash * 31 + name.charCodeAt(i)) % 16777215;
+    }
+
+    let r = (hash >> 16) & 255;
+    let g = (hash >> 8) & 255;
+    let b = hash & 255;
+
+    // Adjusting version-specific modifications (if needed)
+    if (version === 1) {
+        r = (r * 1.2) % 256;
+        g = (g * 0.8) % 256;
+        b = (b * 1.1) % 256;
+    } else if (version === 2) {
+        r = (r * 0.9) % 256;
+        g = (g * 1.1) % 256;
+        b = (b * 0.9) % 256;
+    } else if (version === 3) {
+        r = (r * 1.1) % 256;
+        g = (g * 0.9) % 256;
+        b = (b * 1.2) % 256;
+    }
+
+    // Ensure colors fall into expected categories
+    if (r > g && r > b) {
+        return { r: 255, g: 0, b: 0 }; // Red
+    } else if (b > r && b > g) {
+        return { r: 0, g: 0, b: 255 }; // Blue
+    } else if (g > r && g > b) {
+        return { r: 0, g: 255, b: 0 }; // Green
+    } else {
+        return { r: 128, g: 0, b: 128 }; // Default Purple
     }
 }
 
-const CHAT_COLORS_BY_VERSION = [
-    [
-        new Color(196, 40, 28), // Bright red
-        new Color(13, 105, 172), // Bright blue
-        new Color(39, 70, 45), // Earth green
-        new Color(107, 50, 124) // Bright violet
-    ],
-    [
-        new Color(253, 41, 67), // Fake Persimmon
-        new Color(1, 162, 255), // Fake Cyan
-        new Color(2, 184, 87), // Fake Dark Green
-        new Color(107, 50, 124) // Bright violet
-    ],
-    [
-        new Color(253, 41, 67), // Fake Persimmon
-        new Color(1, 162, 255), // Fake Cyan
-        new Color(2, 184, 87), // Fake Dark Green
-        new Color(180, 128, 255) // Alder
-    ]
-];
-
-function ComputeNameValue(username: string): number {
-    let value = 0;
-    for (let index = 0; index < username.length; index++) {
-        let charCode = username.charCodeAt(index);
-        if ((username.length - index) % 4 >= 2) {
-            charCode = -charCode;
-        }
-        value += charCode;
-    }
-    return value;
-}
-
-export default function GetNameColor(username: string, version: number): Color | null {
-    const chatColors = CHAT_COLORS_BY_VERSION[version ? version - 1 : CHAT_COLORS_BY_VERSION.length - 1];
-    const nameValue = ComputeNameValue(username);
-    const colorIndex = Math.abs(nameValue) % chatColors.length;
-    return chatColors[colorIndex] || null;
+export default function GetNameColor(name: string, version: number) {
+    return hashStringToColor(name, version);
 }
