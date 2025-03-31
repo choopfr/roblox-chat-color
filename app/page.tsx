@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import GetNameColor from '@/scripts/generator'; // Ensure this file exists and is working correctly
 
 export default function Home() {
-  const [username, setUsername] = useState<string>('boist');
+  const [username, setUsername] = useState<string>('choopfr');
   const [version, setVersion] = useState<number>(3);
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false); // State to toggle panel visibility
   const colorRef = useRef<HTMLDivElement>(null);
@@ -57,7 +57,7 @@ export default function Home() {
             id="username"
             className="input-field"
             value={username}
-            placeholder="choopfr" // Placeholder added
+            placeholder="username" // Placeholder added
           />
           <div className="flex space-x-3">
             <button
