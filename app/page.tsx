@@ -1,4 +1,5 @@
 'use client'; 
+
 import { useEffect, useRef, useState } from 'react';
 import GetNameColor from '@/scripts/generator'; // Ensure this file exists and is working correctly
 
@@ -6,8 +7,8 @@ export default function Home() {
   const [username, setUsername] = useState<string>('boist');
   const [version, setVersion] = useState<number>(3);
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false); // State to toggle panel visibility
-  const [error, setError] = useState<string>(''); // To handle error messages
   const colorRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string>(''); // Error message state
 
   // Function to calculate whether the RGB code should be black or white based on the background color
   const getTextColorForBackground = (r: number, g: number, b: number) => {
@@ -16,24 +17,29 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Check if username length is valid (3-20 characters)
     if (username.trim().length < 3 || username.trim().length > 20) {
       setError('Username must be between 3 and 20 characters.');
-      colorRef.current!.style.backgroundColor = "rgb(0, 0, 0)";
-      colorRef.current!.style.color = "white";
-      colorRef.current!.innerText = 'Invalid Username';
-    } else {
-      setError('');
-      let color = GetNameColor(username, version);
-      if (color) {
-        const textColor = getTextColorForBackground(color.r, color.g, color.b); // Get appropriate text color
-        colorRef.current!.style.color = textColor; // Change text color based on brightness of background
-        colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
-        colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
-      } else {
-        colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0)';
-        colorRef.current!.innerText = 'Impossible to display color';
-        colorRef.current!.style.color = 'rgb(255, 0, 0)';
+      if (colorRef.current) {
+        colorRef.current.style.backgroundColor = "rgb(0, 0, 0)";
+        colorRef.current.style.color = "white";
+        colorRef.current.innerText = "Invalid username length.";
       }
+      return;
+    }
+
+    setError(''); // Clear error if valid
+
+    let color = GetNameColor(username, version);
+    if (color) {
+      const textColor = getTextColorForBackground(color.r, color.g, color.b); // Get appropriate text color
+      colorRef.current!.style.color = textColor; // Change text color based on brightness of background
+      colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
+    } else {
+      colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0)';
+      colorRef.current!.innerText = 'Impossible to display color';
+      colorRef.current!.style.color = 'rgb(255, 0, 0, 1)';
     }
   }, [username, version]);
 
@@ -80,12 +86,11 @@ export default function Home() {
             </button>
           </div>
         </div>
-        {error && <div className="error-text">{error}</div>}
         <div
           ref={colorRef}
           className="color-display mt-5 px-5 py-3 text-center rounded-lg transition duration-200"
         >
-          .
+          {error ? error : '.'}
         </div>
         <div className="panel-container mt-5">
           <div onClick={togglePanel} className="panel-header">
