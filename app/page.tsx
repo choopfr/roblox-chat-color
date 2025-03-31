@@ -1,115 +1,102 @@
-'use client'
+'use client';
 
-import { useEffect, useRef, useState } from 'react'
-import GetNameColor from './generator'
+import { useEffect, useRef, useState } from 'react';
+import GetNameColor from '@/scripts/generator'; // Ensure this file exists and is working correctly
 
 export default function Home() {
-  const [username, setUsername] = useState('')
-  const [version, setVersion] = useState(3)
-  const colorRef = useRef<HTMLDivElement>(null)
+  const [username, setUsername] = useState<string>('boist');
+  const [version, setVersion] = useState<number>(3);
+  const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false); // State to toggle panel visibility
+  const colorRef = useRef<HTMLDivElement>(null);
+
+  // Function to calculate whether the RGB code should be black or white based on the background color
+  const getTextColorForBackground = (r: number, g: number, b: number) => {
+    const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return brightness > 128 ? 'black' : 'white';
+  };
 
   useEffect(() => {
-    if (!username.trim()) {
-      // If input is empty, set default color to black (0,0,0)
-      colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0)'
-      colorRef.current!.style.color = 'white' // White text for contrast
-      colorRef.current!.innerText = '0, 0, 0'
-    } else {
-      let color = GetNameColor(username, version)
-      if (color) {
-        const textColor = getTextColorForBackground(color.r, color.g, color.b)
-        colorRef.current!.style.color = textColor
-        colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`
-        colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`
-      } else {
-        colorRef.current!.style.backgroundColor = 'rgb(0, 0, 0)'
-        colorRef.current!.innerText = '0, 0, 0'
-        colorRef.current!.style.color = 'white'
-      }
+    if (username.trim().length < 3 || username.trim().length > 20) {
+      colorRef.current!.style.backgroundColor = "rgb(0, 0, 0)";
+      colorRef.current!.style.color = "white";
+      colorRef.current!.innerText = "Username must be between 3 and 20 characters!";
+      return;
     }
-  }, [username, version])
 
-  // Function to calculate text color for good contrast on the background color
-  const getTextColorForBackground = (r: number, g: number, b: number) => {
-    // Calculate brightness of background color
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000
-    return brightness > 128 ? 'black' : 'white'
-  }
+    let color = GetNameColor(username, version);
+    if (color) {
+      const textColor = getTextColorForBackground(color.r, color.g, color.b); // Get appropriate text color
+      colorRef.current!.style.color = textColor; // Change text color based on brightness of background
+      colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+      colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
+    } else {
+      colorRef.current!.style.backgroundColor = "rgb(0, 0, 0)";
+      colorRef.current!.innerText = "0, 0, 0";
+      colorRef.current!.style.color = "white";
+    }
+  }, [username, version]);
+
+  // Toggle the panel
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
 
   return (
-    <main className="container">
-      <h1 className="header-text">roblox name color</h1>
-      <p className="find-color-text">find a user's chat color</p>
-
-      <div className="input-container">
-        <input
-          onInput={(e) => setUsername((e.target as HTMLInputElement).value)}
-          autoComplete="off"
-          type="text"
-          name="username"
-          id="username"
-          className="input-field"
-          value={username}
-        />
-      </div>
-
-      <div className="flex flex-row justify-center space-x-4">
-        <button
-          onClick={() => setVersion(1)}
-          className={`${
-            version === 1
-              ? 'bg-blue-500 text-slate-200 hover:text-white'
-              : 'bg-slate-800 text-blue-500 hover:text-blue-400'
-          } px-6 py-3 text-center rounded-lg font-semibold shadow-md transition duration-200 transform hover:scale-105`}
+    <div className="container">
+      <div>
+        <div className="header-text">roblox name color</div>
+        <div className="find-color-text">
+          find a user&apos;s chat color.
+        </div>
+        <div className="input-container">
+          <input
+            onInput={(e) => setUsername((e.target as HTMLInputElement).value)}
+            autoComplete="off"
+            type="text"
+            name="username"
+            id="username"
+            className="input-field"
+            value={username}
+          />
+          <div className="flex space-x-3">
+            <button
+              onClick={() => setVersion(1)}
+              className={`button ${version === 1 ? 'button-active' : ''}`}
+            >
+              v1
+            </button>
+            <button
+              onClick={() => setVersion(2)}
+              className={`button ${version === 2 ? 'button-active' : ''}`}
+            >
+              v2
+            </button>
+            <button
+              onClick={() => setVersion(3)}
+              className={`button ${version === 3 ? 'button-active' : ''}`}
+            >
+              v3
+            </button>
+          </div>
+        </div>
+        <div
+          ref={colorRef}
+          className="color-display mt-5 px-5 py-3 text-center rounded-lg transition duration-200"
         >
-          v1
-        </button>
-        <button
-          onClick={() => setVersion(2)}
-          className={`${
-            version === 2
-              ? 'bg-blue-500 text-slate-200 hover:text-white'
-              : 'bg-slate-800 text-blue-500 hover:text-blue-400'
-          } px-6 py-3 text-center rounded-lg font-semibold shadow-md transition duration-200 transform hover:scale-105`}
-        >
-          v2
-        </button>
-        <button
-          onClick={() => setVersion(3)}
-          className={`${
-            version === 3
-              ? 'bg-blue-500 text-slate-200 hover:text-white'
-              : 'bg-slate-800 text-blue-500 hover:text-blue-400'
-          } px-6 py-3 text-center rounded-lg font-semibold shadow-md transition duration-200 transform hover:scale-105`}
-        >
-          v3
-        </button>
-      </div>
-
-      <div
-        ref={colorRef}
-        className="color-display"
-        style={{
-          color: 'white',
-          backgroundColor: 'rgb(0, 0, 0)',
-        }}
-      >
-        0, 0, 0
-      </div>
-
-      <div className="panel-container">
-        <div className="panel-header">what is this?</div>
-        <div className="panel-body">
-          <p>
-            this tool calculates the roblox chat color based on the username entered. the color changes
-            depending on the version of the roblox api used.
-          </p>
+          .
+        </div>
+        <div className="panel-container mt-5">
+          <div onClick={togglePanel} className="panel-header">
+            what is this?
+          </div>
+          <div className={`panel-body ${isPanelOpen ? 'active' : ''}`}>
+            roblox changes your chat color based on your username! insert your username and this site will tell you what color your username will be in roblox chat.
+          </div>
+        </div>
+        <div className="footer mt-5 text-slate-300">
+          made by choop
         </div>
       </div>
-
-      <footer className="footer">
-        <p>made by choop</p>
-      </footer>
-    </main>
-  )
+    </div>
+  );
 }
