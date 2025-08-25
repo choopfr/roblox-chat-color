@@ -95,7 +95,7 @@ export default function Home() {
           </div>
         </div>
         <div className="footer mt-5 text-slate-300">
-          made by choop
+          made by choopfr (vivescence)
         </div>
       </div>
     </div>
