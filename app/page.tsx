@@ -92,11 +92,10 @@ export default function Home() {
             roblox changes your chat color based on your username! insert your username and this site will tell you what color your username will be in roblox chat.
           </div>
         </div>
-        <div className="mt-10 text-xs text-gray-400 opacity-70 select-none pointer-events-none">
+        <div className="mt-10 text-xs text-gray-400 opacity-70 select-none pointer-events-none watermark">
           © 2025 choopfr. (
           <a
             href="https://www.tiktok.com/@vivescence"
-            className="underline text-purple-300 pointer-events-auto"
             target="_blank"
             rel="noopener"
           >
