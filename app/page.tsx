@@ -1,15 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import GetNameColor from '@/scripts/generator'; // Ensure this file exists and is working correctly
+import GetNameColor from '@/scripts/generator';
 
 export default function Home() {
   const [username, setUsername] = useState<string>('choopfr');
   const [version, setVersion] = useState<number>(3);
-  const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false); // State to toggle panel visibility
+  const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
   const colorRef = useRef<HTMLDivElement>(null);
 
-  // Function to calculate whether the RGB code should be black or white based on the background color
   const getTextColorForBackground = (r: number, g: number, b: number) => {
     const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     return brightness > 128 ? 'black' : 'white';
@@ -25,8 +24,8 @@ export default function Home() {
 
     let color = GetNameColor(username, version);
     if (color) {
-      const textColor = getTextColorForBackground(color.r, color.g, color.b); // Get appropriate text color
-      colorRef.current!.style.color = textColor; // Change text color based on brightness of background
+      const textColor = getTextColorForBackground(color.r, color.g, color.b);
+      colorRef.current!.style.color = textColor;
       colorRef.current!.style.backgroundColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
       colorRef.current!.innerText = `${color.r}, ${color.g}, ${color.b}`;
     } else {
@@ -36,7 +35,6 @@ export default function Home() {
     }
   }, [username, version]);
 
-  // Toggle the panel
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
   };
@@ -57,7 +55,7 @@ export default function Home() {
             id="username"
             className="input-field"
             value={username}
-            placeholder="username" // Placeholder added
+            placeholder="username"
           />
           <div className="flex space-x-3">
             <button
@@ -94,8 +92,17 @@ export default function Home() {
             roblox changes your chat color based on your username! insert your username and this site will tell you what color your username will be in roblox chat.
           </div>
         </div>
-        <div className="footer mt-5 text-slate-300">
-          made by choopfr (vivescence)
+        <div className="mt-10 text-xs text-gray-400 opacity-70 select-none pointer-events-none">
+          © 2025 choopfr. (
+          <a
+            href="https://www.tiktok.com/@vivescence"
+            className="underline text-purple-300 pointer-events-auto"
+            target="_blank"
+            rel="noopener"
+          >
+            vivescence
+          </a>
+          )
         </div>
       </div>
     </div>
