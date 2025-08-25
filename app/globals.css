@@ -74,21 +74,21 @@ body {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Faster transition */
-  border: none; /* Removed border to make buttons cleaner */
-  margin-right: 10px; /* Margin between buttons */
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  margin-right: 10px;
 }
 
 .button:hover {
-  background-color: #3b82f6; /* Hover effect */
-  transform: scale(1.05); /* Slight scaling effect on hover */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow on hover for depth */
+  background-color: #3b82f6;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .button-active {
-  background-color: #2563eb; /* Active button background */
-  color: white; /* White text for active button */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for active button */
+  background-color: #2563eb;
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Color display */
@@ -134,6 +134,13 @@ body {
   font-size: 1rem;
   color: #cbd5e1;
   margin-top: 30px;
+}
+
+/* Watermark link */
+.watermark a {
+  color: #2563eb; /* same as active button */
+  text-decoration: none;
+  pointer-events: auto;
 }
 
 /* Responsive Design */
